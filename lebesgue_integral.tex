@@ -1,0 +1,121 @@
+\documentclass[dvipdfmx]{jsreport}
+\usepackage{amsmath,amssymb}
+\usepackage{enumerate}
+
+\newtheorem{theo}{定理}[section]
+\newtheorem{defi}[theo]{定義}
+\newtheorem{lemm}[theo]{補題}
+\newtheorem{rema}[theo]{注}
+\newtheorem{corr}[theo]{系}
+\newtheorem{exam}[theo]{例}
+\newtheorem{prop}[theo]{命題}
+\newtheorem{prob}[theo]{問題}
+
+\makeatletter
+\@addtoreset{equation}{section}
+\def\theequation{\thesection.\arabic{equation}}
+\makeatother
+
+\begin{document}
+
+\title{ルベーグ積分}
+\author{Archaea}
+\maketitle
+
+\chapter{測度}
+
+\section{有限加法的測度}
+
+\begin{defi}
+    (有限加法族) \\
+    与えられた空間 $X$ の部分集合の族 $\mathfrak{F}$ が
+    \begin{enumerate}[(i)]
+        \item $\emptyset \in \mathfrak{F}$
+        \item $A \in \mathfrak{F} \Rightarrow A^c \in \mathfrak{F}$
+        \item $A, B \in \mathfrak{F} \Rightarrow A \cup B \in \mathfrak{F}$
+    \end{enumerate}
+    なる三つの条件を満たすとき, $\mathfrak{F}$ を\textgt{有限加法族}という. 
+\end{defi}
+\begin{rema}
+    この三つの性質から以下の性質が導かれる. 
+    \begin{enumerate}[(i)]
+        \item $X \in \mathfrak{F}$
+        \item $\mathfrak{F}$ に属する集合の和, 差, 交わりをとる演算を有限回行って得られる集合は $\mathfrak{F}$ に属する. 
+    \end{enumerate}
+\end{rema}
+
+\begin{theo}
+    $Z = X \times Y$ (直積空間)とし, $\mathfrak{E}, \mathfrak{F}$ をそれぞれ $X, Y$ の部分集合の有限加法族とする, $Z$ の部分集合で
+    \begin{equation}
+        K = E \times F \qquad (E \in \mathfrak{E}, F \in \mathfrak{F})
+    \end{equation}
+    なる形の集合の有限個の直和として表されるものの全体 $\mathfrak{R}$ は有限加法族である. 
+\end{theo}
+
+\begin{defi}
+    (有限加法的測度) \\
+    空間 $X$ とその部分集合の有限加法族 $\mathfrak{F}$ があって $\mathfrak{F}$-集合関数 $m(A)$ が
+    \begin{enumerate}[(i)]
+        \item 全ての $A \in \mathfrak{F}$ に対して $0 \leq m(A) \leq \infty$, 特に $m(\emptyset) = 0$
+        \item $A, B \in \mathfrak{F}$, $A \cap B = \emptyset \Rightarrow m(A + B) = m(A) + m(B)$ 
+    \end{enumerate}
+    を満たすとき, $m$ を $(\mathfrak{F}の上の)$ \textgt{有限加法的測度}という. 
+\end{defi}
+\begin{rema}
+    上二つの性質から
+    \begin{enumerate}[(i)]
+        \item $\displaystyle A_1, \dots, A_n \in \mathfrak{F}, A_j \cap A_k = \emptyset \ (j \neq k) \Rightarrow m\left(\sum_{j = 1}^n A_j\right) = \sum_{j = 1}^n m(A_j)$
+        \item $A, B \in \mathfrak{F}, A \supset \Rightarrow m(A) \geq m(B)$, 特に $m(B) < \infty \Rightarrow m(A - B) = m(A) - m(B)$
+    \end{enumerate}
+\end{rema}
+
+\begin{defi}
+    有限加法族 $\mathfrak{F}$ の上の有限加法的測度 $m$ が条件 \\
+    $A_1, A_2, \cdots \in \mathfrak{F}$ (可算無限個), $A_j \cap A_k = \emptyset (j \neq k)$ のとき, $A = \sum_{n = 1}^\infty A_n \in \mathfrak{F} \Rightarrow m(A) = \sum_{n = 1}^\infty m(A_n)$ となる \\
+    を満たすとき, $m$ を有限加法族 $\mathfrak{F}$ の上で\textgt{完全加法的}な測度という. 
+\end{defi}
+
+\begin{exam} \label{finitely_additive_measure_example}
+    $X = R^N, \mathfrak{F} = \mathfrak{F}_N$ とし, $f_1(\lambda), \dots, f_N(\lambda)$ を $R^1$ で単調増加な実数値関数で定数でないものとし, 有界な区間 $I = (a_1, b_1] \times \cdots \times (a_N, b_N] (-\infty < a_v < b_v < \infty)$ に対して
+    \begin{equation}
+        m(I) = \prod_{v = 1}^N \{f_v(b_v) - f_v(a_v)\}
+    \end{equation}
+    有界でない区間 $I$ に対しては
+    \begin{equation}
+        m(I) = \sup\{m(J) ; J は I に含まれる任意の有界区間\}
+    \end{equation}
+    と $m$ を定義し, 空集合 $\emptyset$ に対しては $m(\emptyset) = 0$, 区間塊 $E = I_1 + \cdots + I_n$ に対しては
+    \begin{equation}
+        m(E) = m(I_1) + \cdots + m(I_n)
+    \end{equation}
+    と定義する. この $m$ は $\mathfrak{F}_N$ の上の有限加法的測度である. 
+\end{exam}
+
+\begin{theo}
+    上の例\ref{finitely_additive_measure_example}の $m$ が $\mathfrak{F}_N$ の上で完全加法的であるための必要十分条件は全ての $f_v(\lambda)$ が右連続なことである. 
+\end{theo}
+
+\begin{theo}
+    $f_v(\lambda) = \lambda (v = 1, \dots, N)$ であることと, 対応する $m$ が次の二つの条件を満たすことは同値である. 
+    \begin{enumerate}[(i)]
+        \item $I_0 = (0, 1] \times \cdots \times (0, 1]$ (単位立方体)に対して $m(I_0) = 1$
+        \item 集合 $E \in \mathfrak{F}_N$ をベクトル $x$ だけ平行移動したものを $[E + x]$ と書くとき $m([E + x]) = m(E)$
+    \end{enumerate}
+\end{theo}
+
+\section{外測度}
+
+\begin{defi}
+    空間 $X$ の全ての部分集合 $A$ に対して定義された集合関数 $\Gamma(A)$ があって
+    \begin{enumerate}[(i)]
+        \item $0 \leq \Gamma(A) \leq \infty$
+        \item $A \subset B \Rightarrow \Gamma(A) \leq \Gamma(B)$
+        \item $\displaystyle \Gamma\left( \bigcup_{n = 1}^\infty A_n \right) \leq \sum_{n = 1}^\infty \Gamma(A_n)$
+    \end{enumerate}
+    なる三つの条件を満たすとき,  $\Gamma$ を{\bf Carathéodory}\textgt{外測度}という. 
+\end{defi}
+
+
+
+
+\end{document}
