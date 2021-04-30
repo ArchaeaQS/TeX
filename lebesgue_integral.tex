@@ -16,6 +16,8 @@
 \def\theequation{\thesection.\arabic{equation}}
 \makeatother
 
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry}
+
 \begin{document}
 
 \title{ルベーグ積分}
@@ -64,12 +66,14 @@
 \begin{rema}
     上二つの性質から
     \begin{enumerate}[(i)]
-        \item $\displaystyle A_1, \dots, A_n \in \mathfrak{F}, A_j \cap A_k = \emptyset \ (j \neq k) \Rightarrow m\left(\sum_{j = 1}^n A_j\right) = \sum_{j = 1}^n m(A_j)$
-        \item $A, B \in \mathfrak{F}, A \supset \Rightarrow m(A) \geq m(B)$, 特に $m(B) < \infty \Rightarrow m(A - B) = m(A) - m(B)$
+        \item (有限加法性) $\displaystyle A_1, \dots, A_n \in \mathfrak{F}, A_j \cap A_k = \emptyset \ (j \neq k) \Rightarrow m\left(\sum_{j = 1}^n A_j\right) = \sum_{j = 1}^n m(A_j)$
+        \item (単調性) $A, B \in \mathfrak{F}, A \supset B \Rightarrow m(A) \geq m(B)$, 特に $m(B) < \infty \Rightarrow m(A - B) = m(A) - m(B)$
+        \item (有限劣加法性) $\displaystyle A_1, \dots, A_n \in \mathfrak{F} \Rightarrow m\left( \bigcup_{j = 1}^n A_j \right) \leq \sum_{j = 1}^n m(A_j)$
     \end{enumerate}
 \end{rema}
 
 \begin{defi}
+    (完全加法的な測度) \\
     有限加法族 $\mathfrak{F}$ の上の有限加法的測度 $m$ が条件 \\
     $A_1, A_2, \cdots \in \mathfrak{F}$ (可算無限個), $A_j \cap A_k = \emptyset (j \neq k)$ のとき, $A = \sum_{n = 1}^\infty A_n \in \mathfrak{F} \Rightarrow m(A) = \sum_{n = 1}^\infty m(A_n)$ となる \\
     を満たすとき, $m$ を有限加法族 $\mathfrak{F}$ の上で\textgt{完全加法的}な測度という. 
@@ -106,15 +110,161 @@
 \section{外測度}
 
 \begin{defi}
+    (外測度) \\
     空間 $X$ の全ての部分集合 $A$ に対して定義された集合関数 $\Gamma(A)$ があって
     \begin{enumerate}[(i)]
-        \item $0 \leq \Gamma(A) \leq \infty$
-        \item $A \subset B \Rightarrow \Gamma(A) \leq \Gamma(B)$
-        \item $\displaystyle \Gamma\left( \bigcup_{n = 1}^\infty A_n \right) \leq \sum_{n = 1}^\infty \Gamma(A_n)$
+        \item (非負性) $0 \leq \Gamma(A) \leq \infty$
+        \item (単調性) $A \subset B \Rightarrow \Gamma(A) \leq \Gamma(B)$
+        \item (劣加法性) $\displaystyle \Gamma\left( \bigcup_{n = 1}^\infty A_n \right) \leq \sum_{n = 1}^\infty \Gamma(A_n)$
     \end{enumerate}
-    なる三つの条件を満たすとき,  $\Gamma$ を{\bf Carathéodory}\textgt{外測度}という. 
+    なる三つの条件を満たすとき,  $\Gamma$ を{\bf Carathéodory}\textgt{外測度}もしくは単に\textgt{外測度}という. 
 \end{defi}
 
+\begin{theo} \label{outer_measure}
+    $\mathfrak{F}$ を $X$ の部分集合の有限加法族とし, $m$ を $\mathfrak{F}$ の上の有限加法的測度とする. このとき
+    \begin{enumerate}[(i)]
+        \item 任意の $A \subset X$ に対してたかだか可算無限個の集合 $E_n \in \mathfrak{F}$ で $A$ を覆い
+        \begin{equation}
+            \Gamma(A) = \inf \sum_{n = 1}^\infty m(E_n)
+        \end{equation}
+        と定義すると, $\Gamma$ は外測度である. 
+        \item 特に, $m$ が $\mathfrak{F}$ の上で完全加法的ならば $E \in \mathfrak{F}$ に対しては $\Gamma(E) = m(E)$ となる. 
+    \end{enumerate}
+\end{theo}
+
+\begin{defi}
+    (Lebesgue外測度) \\
+    $R^N$ において $f_v(\lambda) = \lambda (v = 1, \dots, N)$ として構成した外測度を $\mu^*(A)$ と書き {\bf Lebesgue}\textgt{外測度}という. 
+    この場合は $I = (a_1, b_1] \times \cdots \times (a_N, b_N]$ に対して
+    \begin{equation}
+        \mu^*(I) = \prod_{v = 1}^N (b_v - a_v)
+    \end{equation}
+    となる. 
+\end{defi}
+
+\begin{theo}
+    任意の $A \subset X$ に対して
+    \begin{equation}
+        \Gamma(A) \leq \Gamma(A \cap E) + \Gamma(A \cap E^c)
+    \end{equation}
+    が成り立つ. 
+\end{theo}
+
+\begin{defi} \label{gamma_measurable}
+    ($\Gamma$-可測) \\
+    空間 $X$ に外測度 $\Gamma$ が定義されているとする. 任意の $A \subset X$ に対して
+    \begin{equation}
+        \Gamma(A) = \Gamma(A \cap E) + \Gamma(A \cap E^c)
+    \end{equation}
+    を満たすとき, 集合 $E \subset X$ は ({\bf Carathéodory}\textgt{の意味で})\textgt{可測}または \textgt{$\Gamma$-可測}であるという. 
+\end{defi}
+\begin{theo}
+    定義\ref{gamma_measurable}の条件は次の条件と同等である. 任意の $A_1 \subset E$ と任意の $A_2 \subset E^c$ に対して
+    \begin{equation}
+        \Gamma(A_1 + A_2) = \Gamma(A_1) + \Gamma(A_2)
+    \end{equation}
+\end{theo}
+
+\begin{theo}
+    $\Gamma$-可測集合の全体を $\mathfrak{M}_\Gamma$ と書く. すると以下が成り立つ. 
+    \begin{enumerate}[(i)]
+        \item $E \in \mathfrak{M}_\Gamma \Rightarrow E^c \in \mathfrak{M}_\Gamma$
+        \item $\Gamma(E) = 0 \Rightarrow E \in \mathfrak{M}_\Gamma$, 従って特に $\emptyset \in \mathfrak{M}_\Gamma$
+    \end{enumerate}
+\end{theo}
+
+\begin{defi}
+    (零集合) \\
+    $\Gamma(E) = 0$ なる集合を\textgt{零集合}という. 
+\end{defi}
+
+\begin{theo}
+    定理\ref{outer_measure}の方法で構成された外測度 $\Gamma$ については $\mathfrak{F} \subset \mathfrak{M}_\Gamma$ が成立する. つまり有限加法族は $\Gamma$-可測である. 
+\end{theo}
+
+\begin{theo}
+    $\displaystyle E_k \in \mathfrak{M}_\Gamma (k = 1, 2, \dots), E_j \cap E_k = \emptyset (j \neq k), S = \sum_{k = 1}^\infty E_k$ ならば
+    \begin{equation}
+        S \in \mathfrak{M}_\Gamma, \Gamma(S) = \sum_{k = 1}^\infty \Gamma(E_k)
+    \end{equation}
+\end{theo}
+
+\begin{theo}
+    $E, F \in \mathfrak{M}_\Gamma$ ならば $E - F \in \mathfrak{M}_\Gamma, E \cap F \in \mathfrak{M}_\Gamma$. 
+\end{theo}
+
+\begin{corr}
+    $E_k \in \mathfrak{M}_\Gamma (k = 1, \dots, n)$ ならば $\displaystyle \bigcup_{k = 1}^n E_k \in \mathfrak{M}_\Gamma, \bigcap_{k = 1}^n E_k \in \mathfrak{M}_\Gamma$. 
+\end{corr}
+
+\begin{theo}
+    $E_n \in \mathfrak{M}_\Gamma (n = 1, 2, \dots)$ ならば $\displaystyle \bigcup_{n = 1}^\infty E_n \in \mathfrak{M}_\Gamma$. 
+\end{theo}
+
+\section{測度}
+
+\begin{defi}
+    (測度) \\
+    空間 $X$ の部分集合の族 $\mathfrak{B}$ があって
+    \begin{enumerate}[(i)]
+        \item $\emptyset \in \mathfrak{B}$
+        \item $E \in \mathfrak{B} \Rightarrow E^c \in \mathfrak{B}$
+        \item $\displaystyle E_n \in \mathfrak{B} (n = 1, 2, \dots) \Rightarrow \bigcup_{n = 1}^\infty E_n \in \mathfrak{B}$
+    \end{enumerate}
+    なる三つの条件を満たすとき, $\mathfrak{B}$ を\textgt{完全加法族, 可算加法族, }{\bf $\boldsymbol \sigma$-}\textgt{加法族}, または単に\textgt{加法族}という. 
+\end{defi}
+
+\begin{rema}
+    有限加法族の場合と同様にして, 
+    \begin{enumerate}[(i)]
+        \item $X \in \mathfrak{B}$
+        \item $\mathfrak{B}$ に属する集合の和, 差, 交わりを作る操作を高々可算無限回行って得られる集合は $\mathfrak{B}$ に属する. 
+    \end{enumerate}
+    が成り立つ. 
+\end{rema}
+
+\begin{defi}
+    (測度) \\
+    空間 $X$ とその部分集合の $\sigma$-加法族 $\mathfrak{B}$ があって, $\mathfrak{B}$-集合関数 $\mu(A)$ が
+    \begin{enumerate}[(i)]
+        \item (非負性) $0 \leq \mu(A) \leq \infty, \mu(\emptyset) = 0 $
+        \item (完全加法性) $\displaystyle A_n \in \mathfrak{B} (n = 1, 2, \dots), A_j \cap A_k = \emptyset (j \neq k) \Rightarrow \mu\left( \sum_{n = 1}^\infty A_n \right) = \sum_{n = 1}^\infty \mu(A_n)$
+    \end{enumerate}
+    を満たすとき, $\mu$ を $\mathfrak{B}$ で定義された\textgt{測度}という. 
+\end{defi}
+\begin{rema}
+    上二つの性質から
+    \begin{enumerate}[(i)]
+        \item (単調性) $A, B \in \mathfrak{B}, A \subset B \Rightarrow \mu(A) \leq \mu(B)$, 特に $\mu(B) < \infty \Rightarrow \mu(A - B) = \mu(A) - \mu(B)$
+        \item (劣加法性) $\displaystyle A_1, \dots, A_n \in \mathfrak{B} \Rightarrow \mu\left( \bigcup_{j = 1}^n A_j \right) \leq \sum_{j = 1}^n \mu(A_j)$
+    \end{enumerate}
+    が成り立つ. 
+\end{rema}
+
+\begin{defi}
+    (測度空間) \\
+    空間 $X$ にその部分集合の $\sigma$-加法族 $\mathfrak{B}$ と $\mathfrak{B}$ で定義された測度 $\mu$ を組み合わせて考えたものを\textgt{測度空間}といい, $(X, \mathfrak{B}, \mu)$ または $X(\mathfrak{B}, \mu)$ と書く. 
+\end{defi}
+
+\begin{theo}
+    $\Gamma$ を空間 $X$ で定義された外測度とすると, $\Gamma$-可測集合の全体 $\mathfrak{M}_\Gamma$ は $\sigma$-加法族をなし, $\Gamma$ は $\mathfrak{M}_\Gamma$ の上で定義された測度である. 
+\end{theo}
+
+\begin{theo}
+    $A_n \in \mathfrak{B}$ とする. 
+    \begin{enumerate}[(i)]
+        \item 集合列 $\{A_n\}$ が単調増加のとき, または単調減少で $\mu(A_1) < \infty$ のときは
+        \begin{equation}
+            \mu(\lim_{n \to \infty} A_n) = \lim_{n \to \infty} \mu(A_n)
+        \end{equation}
+        \item 一般には
+        \begin{align}
+            \mu (\varliminf_{n \to \infty} A_n) \leq \varliminf_{n \to \infty} \mu(A_n) \\
+            \mu\left( \bigcup_{n = 1}^\infty A_n \right) < \infty ならば \mu(\varlimsup_{n \to \infty} A_n) \geq \varlimsup_{n \to \infty} \mu(A_n) \\
+            \mu\left( \bigcup_{n = 1}^\infty A_n \right) < \infty で \lim_{n \to \infty} A_n が存在するならば \mu(\lim_{n \to \infty} A_n) = \lim_{n \to \infty} \mu(A_n)
+        \end{align}
+    \end{enumerate}
+\end{theo}
 
 
 
