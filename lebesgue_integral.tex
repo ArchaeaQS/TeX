@@ -54,7 +54,7 @@
     なる形の集合の有限個の直和として表されるものの全体 $\mathfrak{R}$ は有限加法族である. 
 \end{theo}
 
-\begin{defi}
+\begin{defi} \label{finitely_additive_measure_definition}
     (有限加法的測度) \\
     空間 $X$ とその部分集合の有限加法族 $\mathfrak{F}$ があって $\mathfrak{F}$-集合関数 $m(A)$ が
     \begin{enumerate}[(i)]
@@ -74,9 +74,8 @@
 
 \begin{defi}
     (完全加法的な測度) \\
-    有限加法族 $\mathfrak{F}$ の上の有限加法的測度 $m$ が条件 \\
-    $A_1, A_2, \cdots \in \mathfrak{F}$ (可算無限個), $A_j \cap A_k = \emptyset (j \neq k)$ のとき, $A = \sum_{n = 1}^\infty A_n \in \mathfrak{F} \Rightarrow m(A) = \sum_{n = 1}^\infty m(A_n)$ となる \\
-    を満たすとき, $m$ を有限加法族 $\mathfrak{F}$ の上で\textgt{完全加法的}な測度という. 
+    有限加法族 $\mathfrak{F}$ の上の有限加法的測度 $m$ が $A_1, A_2, \cdots \in \mathfrak{F}$ (可算無限個), $A_j \cap A_k = \emptyset \ (j \neq k)$ のとき $\displaystyle A = \sum_{n = 1}^\infty A_n \in \mathfrak{F} \Rightarrow m(A) = \sum_{n = 1}^\infty m(A_n)$ となるとき, 
+    $m$ を有限加法族 $\mathfrak{F}$ の上で\textgt{完全加法的}な測度という. 
 \end{defi}
 
 \begin{exam} \label{finitely_additive_measure_example}
@@ -103,9 +102,13 @@
     $f_v(\lambda) = \lambda (v = 1, \dots, N)$ であることと, 対応する $m$ が次の二つの条件を満たすことは同値である. 
     \begin{enumerate}[(i)]
         \item $I_0 = (0, 1] \times \cdots \times (0, 1]$ (単位立方体)に対して $m(I_0) = 1$
-        \item 集合 $E \in \mathfrak{F}_N$ をベクトル $x$ だけ平行移動したものを $[E + x]$ と書くとき $m([E + x]) = m(E)$
+        \item 集合 $E \in \mathfrak{F}_N$ をベクトル $x$ だけ平行移動したものを $[E + x]$ と書くとき, $m([E + x]) = m(E)$
     \end{enumerate}
 \end{theo}
+
+今やりたいこととして, 全体集合 $X$ の中のある集合 $A \subset X$ の大きさを測りたいわけです. それにおいて測りたい集合の族 $\mathfrak{F}$ と集合の大きさを測るものさし $m$ が必要となります. 
+この節では測りたい集合の族が有限加法族, ものさしが有限加法的測度となっています. まずは大きさが測れるような集合のみについて考えよう, というわけです. より便利に測りやすくするために, 集合 $A$ を細かく分割してそれぞれで大きさを求めて足し上げるということが出来て欲しいです. 
+このときに定義\ref{finitely_additive_measure_definition}の(ii)がよく効いてきます. ですが有限加法族のままでは可算個の分割しかできませんから, それだと不便なわけです. そこで可算無限個に分割した集合の大きさを測るために次の節の概念が出てくるわけです. 
 
 \section{外測度}
 
@@ -123,7 +126,7 @@
 \begin{theo} \label{outer_measure}
     $\mathfrak{F}$ を $X$ の部分集合の有限加法族とし, $m$ を $\mathfrak{F}$ の上の有限加法的測度とする. このとき
     \begin{enumerate}[(i)]
-        \item 任意の $A \subset X$ に対してたかだか可算無限個の集合 $E_n \in \mathfrak{F}$ で $A$ を覆い
+        \item 任意の $A \subset X$ に対して高々可算無限個の集合 $E_n \in \mathfrak{F}$ で $A$ を覆い, 
         \begin{equation}
             \Gamma(A) = \inf \sum_{n = 1}^\infty m(E_n)
         \end{equation}
@@ -182,8 +185,8 @@
     定理\ref{outer_measure}の方法で構成された外測度 $\Gamma$ については $\mathfrak{F} \subset \mathfrak{M}_\Gamma$ が成立する. つまり有限加法族は $\Gamma$-可測である. 
 \end{theo}
 
-\begin{theo}
-    $\displaystyle E_k \in \mathfrak{M}_\Gamma (k = 1, 2, \dots), E_j \cap E_k = \emptyset (j \neq k), S = \sum_{k = 1}^\infty E_k$ ならば
+\begin{theo} \label{gamma_measure_property}
+    $\displaystyle E_k \in \mathfrak{M}_\Gamma \ (k = 1, 2, \dots), E_j \cap E_k = \emptyset \ (j \neq k), S = \sum_{k = 1}^\infty E_k$ ならば
     \begin{equation}
         S \in \mathfrak{M}_\Gamma, \Gamma(S) = \sum_{k = 1}^\infty \Gamma(E_k)
     \end{equation}
@@ -201,10 +204,16 @@
     $E_n \in \mathfrak{M}_\Gamma (n = 1, 2, \dots)$ ならば $\displaystyle \bigcup_{n = 1}^\infty E_n \in \mathfrak{M}_\Gamma$. 
 \end{theo}
 
+有限加法族から拡張された遊び場として可測集合が出てきました. 先程は $X$ の中でも有限加法族であるようなものしか扱えなかったわけですが, 有限加法族は $\Gamma$-可測ですからこれによってより広い範囲の集合を扱えるようになりました. 
+また有限加法的測度では測れないような集合について, その被覆の測度を測り, その下限をとることで測れるようになりました. つまり外測度によってたとえ $\Gamma$-可測でない集合でも上から覆うことで測れるようになったわけです. 
+特に $m$ が完全加法的であれば $\Gamma(E)$ と $m(E)$ は一致し, 全く同じように大きさを測ることが出来ます. 従って $m$ が完全加法的である場合には $\Gamma$-可測でない集合に対してはその被覆を考えその測度の下限をとることで, $\Gamma$ -可測集合に対してはそのままで測度を測れるようになりました. 
+Lebesgue外測度というのは $\mathbb{R}^N$ の上の測度で, 普通の体積(面積)の自然な拡張になっています. つまり区間塊全体の集合を考えたときにその集合は有限加法族であり, そこから定義した有限加法的測度は完全加法的なので外測度に一致します. 
+定理\ref{gamma_measure_property}によって $\Gamma$ -可測であるような集合に対しては完全加法性が成り立つようになりました. これによってたとえ可算無限個の分割であってもそれぞれの集合の大きさを測って足し上げることで測れるようになりました. 
+
 \section{測度}
 
 \begin{defi}
-    (測度) \\
+    ( $\sigma$-加法族) \\
     空間 $X$ の部分集合の族 $\mathfrak{B}$ があって
     \begin{enumerate}[(i)]
         \item $\emptyset \in \mathfrak{B}$
@@ -227,7 +236,7 @@
     (測度) \\
     空間 $X$ とその部分集合の $\sigma$-加法族 $\mathfrak{B}$ があって, $\mathfrak{B}$-集合関数 $\mu(A)$ が
     \begin{enumerate}[(i)]
-        \item (非負性) $0 \leq \mu(A) \leq \infty, \mu(\emptyset) = 0 $
+        \item (非負性) $0 \leq \mu(A) \leq \infty,\ \mu(\emptyset) = 0 $
         \item (完全加法性) $\displaystyle A_n \in \mathfrak{B} (n = 1, 2, \dots), A_j \cap A_k = \emptyset (j \neq k) \Rightarrow \mu\left( \sum_{n = 1}^\infty A_n \right) = \sum_{n = 1}^\infty \mu(A_n)$
     \end{enumerate}
     を満たすとき, $\mu$ を $\mathfrak{B}$ で定義された\textgt{測度}という. 
@@ -265,6 +274,37 @@
         \end{align}
     \end{enumerate}
 \end{theo}
+
+\begin{theo}
+    空間 $X$ の部分集合からなる任意の集合族 $\mathfrak{A}_0$ に対して, $\mathfrak{A}_0$ を含む最小の $\sigma$-加法族 $\mathfrak{B}_0$ が存在する. 
+    このような $\mathfrak{B}_0$ を $\mathfrak{B}[\mathfrak{A}_0]$ と書くことがある. 
+\end{theo}
+
+\begin{defi}
+    (Borel集合族) \\
+    Euclid空間 $\mathbb{R}^N$ の中の開集合の全体を含む最小の $\sigma$-加法族を $\mathbb{R}^N$ における{\bf Borel}\textgt{集合族}といい, $\mathfrak{B}_N$ と書く. 
+    また $\mathfrak{B}_N$ に属する集合を{\bf Borel}\textgt{集合}と呼ぶ. 
+\end{defi}
+
+\begin{theo}
+    $\mathfrak{I}_N$, $\mathfrak{F}_N$ をそれぞれ $\mathbb{R}^N$ における区間, 区間塊の全体とすると, $\mathfrak{B}_N = \mathfrak{B}[\mathfrak{F}_N] = \mathfrak{B}[\mathfrak{I}_N]$ である. 
+\end{theo}
+
+\begin{defi}
+    (Borel集合族) \\
+    一般の空間 $X$ においてその部分集合の $\sigma$-加法族 $\mathfrak{B}$ が与えられているとき, $\mathfrak{B}$ を $X$ における{\bf Borel}\textgt{集合族}と呼び, $\mathfrak{B}$ に属する集合を{\bf Borel}\textgt{集合}または {\bf $\mathfrak{B}$-}\textgt{可測集合} と呼ぶ. 
+    これはEuclid空間におけるBorel集合族とは意味が違う. また, 空間 $X$ に $\sigma$-加法族 $\mathfrak{B}$ を組み合わせた $(X, \mathfrak{B})$ を{\bf Borel}\textgt{空間}または\textgt{可測空間}と呼ぶ. 
+\end{defi}
+
+\begin{defi}
+    測度空間 $(X, \mathfrak{B}, \mu)$ において, $X$ が $\mu$ 測度有限な集合の可算個の和になっている場合, 即ち
+    \begin{equation}
+        X = \bigcup_{k = 1}^\infty X_k, \ X_k \in \mathfrak{B}, \ \mu(X_k) < \infty
+    \end{equation}
+    が成立しているとき, この測度空間は {\bf $\sigma$-}\textgt{有限}であるという. 
+\end{defi}
+
+\section{Lebesgue測度の性質}
 
 
 
